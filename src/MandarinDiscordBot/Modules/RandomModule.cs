@@ -1,19 +1,19 @@
 ﻿using Discord.Interactions;
 using Pcg;
 
-namespace MandarinDiscordBot.Commands;
+namespace MandarinDiscordBot.Modules;
 
-public class RandomCommand : InteractionModuleBase
+public class RandomModule : InteractionModuleBase
 {
     private readonly PcgRandom _random;
 
-    public RandomCommand()
+    public RandomModule()
     {
         _random = new PcgRandom();
     }
 
     [SlashCommand("random", "Gives random number", runMode: RunMode.Async)]
-    public async Task Blep([Summary(description: "Min value included")] int minValue = int.MinValue, [Summary(description: "Max value included")] [MaxValue(int.MaxValue - 1)] int maxValue = int.MaxValue - 1)
+    public async Task GetRandomNumber([Summary(description: "Min value included")] int minValue = int.MinValue, [Summary(description: "Max value included")] [MaxValue(int.MaxValue - 1)] int maxValue = int.MaxValue - 1)
     {
         if(maxValue < minValue)
         {

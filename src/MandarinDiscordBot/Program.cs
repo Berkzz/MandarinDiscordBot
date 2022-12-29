@@ -1,15 +1,12 @@
 ﻿using Discord;
 using Discord.Interactions;
-using Discord.Net;
 using Discord.WebSocket;
-using MandarinDiscordBot.Commands;
 using MandarinDiscordBot.Constants;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
+using MandarinDiscordBot.Extensions;
 
 public class Program
 {
-    public static Task Main(string[] args) => new Program().MainAsync();
+    public static Task Main() => new Program().MainAsync();
 
     private DiscordSocketClient _client;
     private InteractionService _interactionService;
@@ -18,25 +15,13 @@ public class Program
 
     public Program()
     {
-        _serviceProvider = CreateProvider();
-    }
-
-    static IServiceProvider CreateProvider()
-    {
-        var collection = new ServiceCollection();
-
-        return collection.BuildServiceProvider();
+        _client = new DiscordSocketClient();
+        _serviceProvider = BotServices.BuildServiceProvider();
+        _interactionService = new InteractionService(_client.Rest);
     }
 
     public async Task MainAsync()
     {
-        _client = new DiscordSocketClient();
-
-        //_client.Log += Log;
-        _client.Ready += Client_Ready;
-
-        _interactionService = new InteractionService(_client.Rest);
-
         var token = Environment.GetEnvironmentVariable(EnvironmentConstants.KeyName);
 
         if (token == null)
@@ -50,6 +35,9 @@ public class Program
             await _interactionService.ExecuteCommandAsync(ctx, _serviceProvider);
         };
 
+        //_client.Log += Log;
+        _client.Ready += Client_Ready;
+
         await _client.LoginAsync(TokenType.Bot, token);
         await _client.StartAsync();
 
@@ -59,6 +47,19 @@ public class Program
     private async Task Client_Ready()
     {
         await _interactionService.AddModulesAsync(GetType().Assembly, _serviceProvider);
-        await _interactionService.RegisterCommandsGloballyAsync();
+
+    #if DEBUG
+
+        if (ulong.TryParse(Environment.GetEnvironmentVariable(EnvironmentConstants.TestGuildIdName), out var guildId))
+        {
+            await _interactionService.RegisterCommandsToGuildAsync(guildId);
+        }
+
+    #else
+
+        await interactionService.RegisterCommandsGloballyAsync();
+
+    #endif
+
     }
 }
