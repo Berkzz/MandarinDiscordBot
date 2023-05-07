@@ -13,7 +13,7 @@ public class RandomModule : InteractionModuleBase
     }
 
     [SlashCommand("random", "Gives random number", runMode: RunMode.Async)]
-    public async Task GetRandomNumber([Summary(description: "Min value included")] int minValue = int.MinValue, [Summary(description: "Max value included")] [MaxValue(int.MaxValue - 1)] int maxValue = int.MaxValue - 1)
+    public async Task GetRandomNumber([Summary(description: "Min value included")][MinValue(int.MinValue)][MaxValue(int.MaxValue - 1)]int minValue = int.MinValue, [Summary(description: "Max value included")][MinValue(int.MinValue)][MaxValue(int.MaxValue - 1)]int maxValue = int.MaxValue - 1)
     {
         if(maxValue < minValue)
         {

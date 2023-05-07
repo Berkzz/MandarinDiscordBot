@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MandarinDiscordBot.Services.Audio;
+using MandarinDiscordBot.Services.Music;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MandarinDiscordBot.Extensions;
 
 public static class BotServices
 {
-    public static IServiceProvider? Provider { get; private set; }
+    private static IServiceProvider? Provider { get; set; }
 
     public static IServiceProvider BuildServiceProvider()
     {
@@ -16,6 +18,10 @@ public static class BotServices
     private static IServiceCollection ConfigureServices()
     {
         var serviceCollection = new ServiceCollection();
+
+        serviceCollection.AddSingleton<YoutubeService>();
+        serviceCollection.AddSingleton<GuildPool>();
+        serviceCollection.AddSingleton<StreamConverter>();
 
         return serviceCollection;
     }

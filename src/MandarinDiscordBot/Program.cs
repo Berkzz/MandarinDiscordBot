@@ -57,7 +57,7 @@ public class Program
 
     #else
 
-        await interactionService.RegisterCommandsGloballyAsync();
+        await _interactionService.RegisterCommandsGloballyAsync();
 
     #endif
 
