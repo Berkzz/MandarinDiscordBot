@@ -1,9 +1,6 @@
-﻿using AngleSharp.Io;
-using AngleSharp.Media;
-using Discord;
+﻿using Discord;
 using Discord.Interactions;
 using MandarinDiscordBot.Services.Audio;
-using MandarinDiscordBot.Services.Enums;
 using MandarinDiscordBot.Services.Extensions;
 using MandarinDiscordBot.Services.Music;
 
@@ -24,7 +21,7 @@ public class MusicModule : InteractionModuleBase
 
     private bool TryGetVoiceChannel(IVoiceChannel? channel, out IVoiceChannel? outVoiceChannel)
     {
-        if(channel != null)
+        if (channel != null)
         {
             outVoiceChannel = channel;
 
@@ -33,7 +30,7 @@ public class MusicModule : InteractionModuleBase
 
         var actualChannel = (Context.User as IGuildUser)?.VoiceChannel;
 
-        if(actualChannel != null)
+        if (actualChannel != null)
         {
             outVoiceChannel = actualChannel;
 
@@ -84,7 +81,7 @@ public class MusicModule : InteractionModuleBase
     {
         var voiceChannel = (await Context.Guild.GetCurrentUserAsync())?.VoiceChannel;
 
-        if(voiceChannel == null)
+        if (voiceChannel == null)
         {
             await RespondAsync("Bot is not in channel", ephemeral: true);
 
@@ -98,7 +95,7 @@ public class MusicModule : InteractionModuleBase
 
     [SlashCommand("play", "Plays music from Youtube", runMode: RunMode.Async)]
     public async Task PlayYoutubeMusic(
-        [Summary(description: "Youtube video url / search request / playlist")] string request, 
+        [Summary(description: "Youtube video url / search request / playlist")] string request,
         [Summary(description: "Voice channel bot plays music in")] IVoiceChannel? channel = null)
     {
         if (!TryGetVoiceChannel(channel, out var actualVoiceChannel))
@@ -133,7 +130,7 @@ public class MusicModule : InteractionModuleBase
     [SlashCommand("skip", "Skips current song", runMode: RunMode.Async)]
     public async Task SkipSong()
     {
-        if(!_guilds.TryGetGuild(Context.Guild, out var guild))
+        if (!_guilds.TryGetGuild(Context.Guild, out var guild))
         {
             await RespondAsync("Nothing to skip", ephemeral: true);
         }

@@ -1,7 +1,4 @@
 ﻿using MandarinDiscordBot.Services.Audio;
-using YoutubeExplode.Playlists;
-using YoutubeExplode.Search;
-using YoutubeExplode.Videos;
 
 namespace MandarinDiscordBot.Services.Music;
 

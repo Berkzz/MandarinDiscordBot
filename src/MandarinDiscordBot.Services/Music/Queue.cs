@@ -1,7 +1,5 @@
-﻿using CliWrap;
-using Discord.Audio;
+﻿using Discord.Audio;
 using MandarinDiscordBot.Services.Audio;
-using YoutubeExplode.Videos;
 
 namespace MandarinDiscordBot.Services.Music;
 
@@ -53,7 +51,7 @@ public class Queue
 
         AddSongList(songs);
 
-        if(!IsPlaying)
+        if (!IsPlaying)
         {
             await SongLoop();
         }
@@ -61,7 +59,7 @@ public class Queue
 
     public void SkipSong()
     {
-        if(_tokenSource == null || _tokenSource.IsCancellationRequested)
+        if (_tokenSource == null || _tokenSource.IsCancellationRequested)
         {
             return;
         }

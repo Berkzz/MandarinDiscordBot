@@ -48,18 +48,18 @@ public class Program
     {
         await _interactionService.AddModulesAsync(GetType().Assembly, _serviceProvider);
 
-    #if DEBUG
+#if DEBUG
 
         if (ulong.TryParse(Environment.GetEnvironmentVariable(EnvironmentConstants.TestGuildIdName), out var guildId))
         {
             await _interactionService.RegisterCommandsToGuildAsync(guildId);
         }
 
-    #else
+#else
 
         await _interactionService.RegisterCommandsGloballyAsync();
 
-    #endif
+#endif
 
     }
 }

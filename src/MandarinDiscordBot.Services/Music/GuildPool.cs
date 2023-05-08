@@ -4,13 +4,13 @@ namespace MandarinDiscordBot.Services.Music;
 
 public class GuildPool
 {
-    private List<Guild> _guilds = new List<Guild>();
+    private List<Guild> _guilds = new();
 
     public Guild GetOrAddGuild(IGuild guild)
     {
         var existingGuild = _guilds.SingleOrDefault(x => x.Id == guild.Id);
 
-        if(existingGuild == null)
+        if (existingGuild == null)
         {
             var newGuild = new Guild(guild.Id);
 
@@ -26,7 +26,7 @@ public class GuildPool
     {
         var existingGuild = _guilds.SingleOrDefault(x => x.Id == guild.Id);
 
-        if(existingGuild == null)
+        if (existingGuild == null)
         {
             outGuild = null;
 
